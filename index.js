@@ -1,10 +1,11 @@
 const express = require("express");
 const app = express();
-const { testDbConnection } = require('./config/database.js');
-const dotenv = require("dotenv");
-dotenv.config();
+const { sequelize } = require('./models/');
 
-testDbConnection();
+// const { testDbConnection } = require('./config/database.js');
+// testDbConnection();
+
+
 const PORT = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: true }));
@@ -13,19 +14,24 @@ app.use(express.json());
 // app.use('/api', require(''));
 
 
-// const { Client } = require('pg')
-// const client = new Client({
-//   user: 'sgpostgres',
-//   host: 'SG-PostgreNoSSL-14-pgsql-master.devservers.scalegrid.io',
-//   database: 'postgres',
-//   password: 'password',
-//   port: 5432,
-// })
-// client.connect(function(err) {
-//   if (err) throw err;
-//   console.log("Connected!");
+const startServer = async function () {
+	try {
+		await sequelize.authenticate();
+		console.log('database connected');
 
-// });
+		// const serverPort = process.env.PORT || 3000;
+		// app.listen(serverPort);
+		// console.log(`--- Server started on ${serverPort} ---\n\n`);
+	} catch (err) {
+		// console.log('server setup failed', err);
+		console.log('Database connection failed', err);
+
+		console.log('Error: ', err.message);
+	}
+};
+
+startServer();
+
 
 app.listen(PORT, () => {
 	console.log(`server running on port http://localhost:${PORT}`);
