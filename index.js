@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const { sequelize } = require('./models/');
-
+const { registerRoutes } = require('./routes/index.js');
 // const { testDbConnection } = require('./config/database.js');
 // testDbConnection();
 
@@ -29,6 +29,7 @@ const startServer = async function () {
 };
 
 startServer();
+registerRoutes(app);
 
 app.listen(PORT, () => {
 	console.log(`server running on port http://localhost:${PORT}`);
