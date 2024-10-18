@@ -1,10 +1,9 @@
-const express = require("express");
+const express = require('express');
 const app = express();
 const { sequelize } = require('./models/');
 
 // const { testDbConnection } = require('./config/database.js');
 // testDbConnection();
-
 
 const PORT = process.env.PORT || 3000;
 
@@ -12,7 +11,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // app.use('/api', require(''));
-
 
 const startServer = async function () {
 	try {
@@ -32,8 +30,6 @@ const startServer = async function () {
 
 startServer();
 
-
 app.listen(PORT, () => {
 	console.log(`server running on port http://localhost:${PORT}`);
 });
-
